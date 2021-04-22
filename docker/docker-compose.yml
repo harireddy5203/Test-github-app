@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+
+    # Service - test-github-app-db-server
+    test-github-app-db-server:
+        container_name: test-github-app-db-server
+        image: postgres:12.4
+        restart: always
+        ports:
+            - "3306:3306"
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+            - POSTGRES_DB=database
+
+# Service - test-github-app-service
+    test-github-app-service:
+        container_name: test-github-app-service
+        image: img/test-github-app-service:1.0.0
+        restart: always
+        ports:
+            - "8099:8099"
+        depends_on:
+            - test-github-app-db-server
+

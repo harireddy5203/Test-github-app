@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+
+    # Service - github-artifactname-db-server
+    github-artifactname-db-server:
+        container_name: github-artifactname-db-server
+        image: postgres:12.4
+        restart: always
+        ports:
+            - "3306:3306"
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+            - POSTGRES_DB=database
+
+# Service - github-artifactname-service
+    github-artifactname-service:
+        container_name: github-artifactname-service
+        image: img/github-artifactname-service:1.0.0
+        restart: always
+        ports:
+            - "8099:8099"
+        depends_on:
+            - github-artifactname-db-server
+
